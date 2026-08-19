@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#0d1117;color:#e6edf3;font-family:'Segoe UI',system-ui,sans-serif;height:100vh;overflow:hidden;display:flex;flex-direction:column;}
+
+header{padding:14px 24px;border-bottom:1px solid #21262d;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;background:#0d1117;}
+.brand{font-size:16px;font-weight:800;color:#e6edf3;letter-spacing:-.3px;}
+.brand span{color:#388bfd;}
+.tag{background:rgba(56,139,253,.15);color:#388bfd;border:1px solid rgba(56,139,253,.3);padding:3px 10px;border-radius:12px;font-size:11px;font-weight:600;}
+
+.main{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:0;overflow:hidden;}
+
+/* LEFT PANEL */
+.left{padding:24px;border-right:1px solid #21262d;display:flex;flex-direction:column;gap:18px;overflow-y:auto;}
+.left::-webkit-scrollbar{width:0;}
+.section-label{font-size:11px;font-weight:700;color:#7d8590;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;}
+
+.equation-display{background:#161b22;border:1px solid #21262d;border-radius:10px;padding:16px;text-align:center;}
+.eq-text{font-size:22px;font-weight:700;color:#e6edf3;font-family:'Courier New',monospace;letter-spacing:1px;}
+.eq-sub{font-size:12px;color:#7d8590;margin-top:4px;}
+
+.inputs-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+.input-group{display:flex;flex-direction:column;gap:6px;}
+.input-group label{font-size:12px;font-weight:600;color:#8b949e;}
+.coeff-input{background:#161b22;border:1.5px solid #30363d;border-radius:8px;padding:10px 12px;color:#e6edf3;font-size:18px;font-weight:700;font-family:'Courier New',monospace;text-align:center;outline:none;width:100%;transition:.2s;}
+.coeff-input:focus{border-color:#388bfd;box-shadow:0 0 0 3px rgba(56,139,253,.15);}
+
+.solve-btn{background:linear-gradient(135deg,#388bfd,#1f6feb);color:#fff;border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;transition:.2s;letter-spacing:.3px;}
+.solve-btn:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(56,139,253,.4);}
+.solve-btn:active{transform:translateY(0);}
+
+.result-panel{background:#161b22;border:1px solid #21262d;border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:10px;min-height:120px;}
+.result-title{font-size:12px;font-weight:700;color:#7d8590;text-transform:uppercase;letter-spacing:.8px;}
+.result-empty{color:#484f58;font-size:13px;text-align:center;margin:auto;}
+
+.disc-row{display:flex;align-items:center;gap:8px;}
+.disc-label{font-size:12px;color:#8b949e;min-width:100px;}
+.disc-value{font-size:14px;font-weight:700;font-family:'Courier New',monospace;}
+
+.roots-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px;}
+.root-card{background:#0d1117;border-radius:8px;padding:10px 12px;border:1px solid #30363d;}
+.root-label{font-size:10px;font-weight:700;color:#7d8590;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
+.root-value{font-size:16px;font-weight:800;font-family:'Courier New',monospace;}
+.root-value.real{color:#3fb950;}
+.root-value.complex{color:#d2a8ff;}
+.root-value.equal{color:#388bfd;}
+
+.nature-pill{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;margin-top:4px;}
+.nature-two{background:rgba(63,185,80,.15);color:#3fb950;border:1px solid rgba(63,185,80,.3);}
+.nature-one{background:rgba(56,139,253,.15);color:#388bfd;border:1px solid rgba(56,139,253,.3);}
+.nature-complex{background:rgba(210,168,255,.15);color:#d2a8ff;border:1px solid rgba(210,168,255,.3);}
+
+.steps{background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:12px;margin-top:4px;}
+.step{font-size:12px;color:#8b949e;font-family:'Courier New',monospace;line-height:1.8;}
+.step span{color:#e6edf3;}
+
+/* RIGHT PANEL - GRAPH */
+.right{padding:16px;display:flex;flex-direction:column;gap:12px;background:#0d1117;overflow:hidden;}
+.canvas-wrap{flex:1;background:#161b22;border:1px solid #21262d;border-radius:10px;overflow:hidden;position:relative;min-height:0;}
+canvas{display:block;width:100%;height:100%;}
+.graph-hint{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font-size:11px;color:#484f58;white-space:nowrap;}
+
+.clear-btn{background:#21262d;border:1px solid #30363d;color:#8b949e;border-radius:8px;padding:8px;font-size:12px;font-weight:600;cursor:pointer;transition:.2s;}
+.clear-btn:hover{background:#30363d;color:#e6edf3;}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">Quadratic<span>Solver</span></div>
+  <span class="tag">ax² + bx + c = 0</span>
+</header>
+
+<div class="main">
+  <!-- LEFT -->
+  <div class="left">
+    <div>
+      <div class="section-label">Equation Preview</div>
+      <div class="equation-display">
+        <div class="eq-text" id="eq-preview">ax² + bx + c = 0</div>
+        <div class="eq-sub">Enter coefficients below</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-label">Coefficients</div>
+      <div class="inputs-grid">
+        <div class="input-group">
+          <label>a (x²)</label>
+          <input class="coeff-input" id="coeff-a" type="number" value="1" placeholder="a">
+        </div>
+        <div class="input-group">
+          <label>b (x)</label>
+          <input class="coeff-input" id="coeff-b" type="number" value="-3" placeholder="b">
+        </div>
+        <div class="input-group">
+          <label>c (constant)</label>
+          <input class="coeff-input" id="coeff-c" type="number" value="2" placeholder="c">
+        </div>
+      </div>
+    </div>
+
+    <button class="solve-btn" onclick="solve()">Solve Equation →</button>
+
+    <div>
+      <div class="section-label">Result</div>
+      <div class="result-panel" id="result-panel">
+        <div class="result-empty">Enter coefficients and press Solve</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right">
+    <div class="section-label" style="margin-bottom:0">Parabola Graph</div>
+    <div class="canvas-wrap">
+      <canvas id="graph"></canvas>
+      <div class="graph-hint">Graph updates after solving</div>
+    </div>
+    <button class="clear-btn" onclick="clearAll()">✕ Clear</button>
+  </div>
+</div>
+
+<script>
+const inputs = {a:document.getElementById('coeff-a'), b:document.getElementById('coeff-b'), c:document.getElementById('coeff-c')};
+const eqPreview = document.getElementById('eq-preview');
+const resultPanel = document.getElementById('result-panel');
+const canvas = document.getElementById('graph');
+const ctx = canvas.getContext('2d');
+
+// Update equation preview live
+function updatePreview(){
+  const a = inputs.a.value||'a', b = inputs.b.value||'b', c = inputs.c.value||'c';
+  const bSign = parseFloat(b) < 0 ? `${b}x` : `+${b}x`;
+  const cSign = parseFloat(c) < 0 ? `${c}` : `+${c}`;
+  eqPreview.textContent = `${a}x² ${bSign} ${cSign} = 0`;
+}
+Object.values(inputs).forEach(i=>i.addEventListener('input', updatePreview));
+updatePreview();
+
+function fmt(n){ return Number(n.toFixed(4)); }
+
+function solve(){
+  const a = parseFloat(inputs.a.value);
+  const b = parseFloat(inputs.b.value);
+  const c = parseFloat(inputs.c.value);
+
+  if(isNaN(a)||isNaN(b)||isNaN(c)||a===0){
+    resultPanel.innerHTML = `<div class="result-empty" style="color:#f85149">⚠ Enter valid values (a ≠ 0)</div>`;
+    return;
+  }
+
+  const disc = b*b - 4*a*c;
+  let html = '';
+
+  html += `<div class="disc-row"><span class="disc-label">Discriminant (Δ):</span><span class="disc-value" style="color:${disc>0?'#3fb950':disc===0?'#388bfd':'#f85149'}">${fmt(disc)}</span></div>`;
+
+  if(disc > 0){
+    const x1 = (-b + Math.sqrt(disc))/(2*a);
+    const x2 = (-b - Math.sqrt(disc))/(2*a);
+    html += `<span class="nature-pill nature-two">Two distinct real roots</span>`;
+    html += `<div class="roots-row">
+      <div class="root-card"><div class="root-label">x₁</div><div class="root-value real">${fmt(x1)}</div></div>
+      <div class="root-card"><div class="root-label">x₂</div><div class="root-value real">${fmt(x2)}</div></div>
+    </div>`;
+    html += `<div class="steps"><div class="step">Δ = b² − 4ac = <span>${fmt(b*b)} − ${fmt(4*a*c)} = ${fmt(disc)}</span></div>
+    <div class="step">x = (−b ± √Δ) / 2a</div>
+    <div class="step">x₁ = <span>(${-b} + ${fmt(Math.sqrt(disc))}) / ${2*a} = ${fmt(x1)}</span></div>
+    <div class="step">x₂ = <span>(${-b} − ${fmt(Math.sqrt(disc))}) / ${2*a} = ${fmt(x2)}</span></div></div>`;
+  } else if(disc === 0){
+    const x = -b/(2*a);
+    html += `<span class="nature-pill nature-one">One repeated real root</span>`;
+    html += `<div class="roots-row">
+      <div class="root-card"><div class="root-label">x₁ = x₂</div><div class="root-value equal">${fmt(x)}</div></div>
+    </div>`;
+    html += `<div class="steps"><div class="step">Δ = 0 → x = −b / 2a</div>
+    <div class="step">x = <span>${-b} / ${2*a} = ${fmt(x)}</span></div></div>`;
+  } else {
+    const realPart = fmt(-b/(2*a));
+    const imagPart = fmt(Math.sqrt(-disc)/(2*a));
+    html += `<span class="nature-pill nature-complex">Two complex roots</span>`;
+    html += `<div class="roots-row">
+      <div class="root-card"><div class="root-label">x₁</div><div class="root-value complex">${realPart} + ${imagPart}i</div></div>
+      <div class="root-card"><div class="root-label">x₂</div><div class="root-value complex">${realPart} − ${imagPart}i</div></div>
+    </div>`;
+    html += `<div class="steps"><div class="step">Δ = <span>${fmt(disc)}</span> (negative → complex roots)</div>
+    <div class="step">Real part: <span>−b/2a = ${realPart}</span></div>
+    <div class="step">Imaginary: <span>√|Δ|/2a = ${imagPart}</span></div></div>`;
+  }
+
+  resultPanel.innerHTML = html;
+  drawGraph(a, b, c, disc);
+}
+
+function drawGraph(a, b, c, disc){
+  const W = canvas.offsetWidth;
+  const H = canvas.offsetHeight;
+  canvas.width = W;
+  canvas.height = H;
+
+  const cx = W/2, cy = H/2;
+  const scale = 30;
+
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle = '#161b22';
+  ctx.fillRect(0,0,W,H);
+
+  // Grid
+  ctx.strokeStyle = '#21262d';
+  ctx.lineWidth = 1;
+  for(let x=-10;x<=10;x++){
+    ctx.beginPath();
+    ctx.moveTo(cx+x*scale,0);
+    ctx.lineTo(cx+x*scale,H);
+    ctx.stroke();
+  }
+  for(let y=-8;y<=8;y++){
+    ctx.beginPath();
+    ctx.moveTo(0,cy+y*scale);
+    ctx.lineTo(W,cy+y*scale);
+    ctx.stroke();
+  }
+
+  // Axes
+  ctx.strokeStyle = '#484f58';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(0,cy); ctx.lineTo(W,cy); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(cx,0); ctx.lineTo(cx,H); ctx.stroke();
+
+  // Axis labels
+  ctx.fillStyle='#484f58'; ctx.font='10px monospace';
+  for(let x=-9;x<=9;x+=3) if(x!==0){ ctx.fillText(x,cx+x*scale-4,cy+14); }
+  for(let y=-6;y<=6;y+=2) if(y!==0){ ctx.fillText(-y,cx+6,cy+y*scale+4); }
+  ctx.fillStyle='#7d8590'; ctx.font='12px monospace';
+  ctx.fillText('x',W-16,cy-8); ctx.fillText('y',cx+8,12);
+
+  // Parabola
+  ctx.beginPath();
+  ctx.strokeStyle = '#388bfd';
+  ctx.lineWidth = 2.5;
+  ctx.shadowColor='#388bfd'; ctx.shadowBlur=8;
+  let first = true;
+  for(let px=0;px<W;px++){
+    const x = (px - cx)/scale;
+    const y = a*x*x + b*x + c;
+    const py = cy - y*scale;
+    if(py < -100 || py > H+100){ first=true; continue; }
+    if(first){ ctx.moveTo(px,py); first=false; } else { ctx.lineTo(px,py); }
+  }
+  ctx.stroke();
+  ctx.shadowBlur=0;
+
+  // Roots / vertex
+  const vertex_x = -b/(2*a);
+  const vertex_y = a*vertex_x*vertex_x + b*vertex_x + c;
+  ctx.fillStyle='#e3b341'; ctx.font='bold 11px monospace';
+  ctx.beginPath(); ctx.arc(cx+vertex_x*scale, cy-vertex_y*scale,5,0,Math.PI*2); ctx.fillStyle='#e3b341'; ctx.fill();
+  ctx.fillStyle='#e3b341'; ctx.fillText(`V(${(vertex_x).toFixed(1)}, ${(vertex_y).toFixed(1)})`, cx+vertex_x*scale+8, cy-vertex_y*scale-8);
+
+  if(disc >= 0){
+    const x1 = (-b+Math.sqrt(disc))/(2*a);
+    const x2 = (-b-Math.sqrt(disc))/(2*a);
+    [x1,x2].forEach(rx=>{
+      ctx.beginPath(); ctx.arc(cx+rx*scale,cy,5,0,Math.PI*2);
+      ctx.fillStyle='#3fb950'; ctx.fill();
+      ctx.fillStyle='#3fb950'; ctx.font='bold 10px monospace';
+      ctx.fillText(`(${rx.toFixed(2)},0)`,cx+rx*scale+6,cy-10);
+    });
+  }
+}
+
+function clearAll(){
+  inputs.a.value=''; inputs.b.value=''; inputs.c.value='';
+  resultPanel.innerHTML='<div class="result-empty">Enter coefficients and press Solve</div>';
+  eqPreview.textContent='ax² + bx + c = 0';
+  canvas.width=canvas.offsetWidth; canvas.height=canvas.offsetHeight;
+  ctx.fillStyle='#161b22'; ctx.fillRect(0,0,canvas.width,canvas.height);
+}
+
+// Initial draw on load
+window.addEventListener('load', ()=>{ setTimeout(()=>solve(), 200); });
+window.addEventListener('resize', ()=>{ if(inputs.a.value) solve(); });
+</script>
+</body>
+</html>

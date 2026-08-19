@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:#0a0a0a;color:#f0f0f0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;display:flex;height:100vh;overflow:hidden;}
+  .sidebar{width:72px;background:#111;border-right:1px solid #222;display:flex;flex-direction:column;align-items:center;padding:20px 0;gap:8px;}
+  .logo-box{width:42px;height:42px;background:#d4a017;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:16px;}
+  .nav-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;transition:.2s;color:#888;}
+  .nav-icon:hover,.nav-icon.active{background:#1e1e1e;color:#d4a017;}
+  .main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+  header{padding:14px 24px;border-bottom:1px solid #1e1e1e;display:flex;justify-content:space-between;align-items:center;}
+  .header-left{display:flex;align-items:center;gap:12px;}
+  .section-tag{background:#d4a017;color:#000;padding:3px 10px;border-radius:4px;font-size:12px;font-weight:700;}
+  .header-title{font-size:18px;font-weight:700;}
+  .header-right{display:flex;gap:10px;align-items:center;}
+  .view-btn{padding:6px 14px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;border:none;}
+  .view-btn.active{background:#d4a017;color:#000;}
+  .view-btn:not(.active){background:#1e1e1e;color:#888;}
+  .search{background:#1e1e1e;border:1px solid #333;border-radius:6px;padding:6px 12px;color:#f0f0f0;font-size:13px;outline:none;width:200px;}
+  .filter-row{display:flex;gap:8px;padding:12px 24px;border-bottom:1px solid #1e1e1e;overflow-x:auto;}
+  .filter{padding:5px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;}
+  .filter.active{background:#d4a017;color:#000;}
+  .filter:not(.active){background:#1e1e1e;color:#888;}
+  .gallery{flex:1;display:grid;grid-template-columns:repeat(4,1fr);gap:2px;overflow:hidden;padding:2px;}
+  .photo{position:relative;overflow:hidden;cursor:pointer;background:#111;}
+  .photo img{width:100%;height:100%;object-fit:cover;display:block;transition:.3s;}
+  .photo:hover img{transform:scale(1.05);}
+  .photo-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7) 0%,transparent 50%);opacity:0;transition:.3s;}
+  .photo:hover .photo-overlay{opacity:1;}
+  .photo-meta{position:absolute;bottom:0;left:0;right:0;padding:10px;transform:translateY(10px);transition:.3s;opacity:0;}
+  .photo:hover .photo-meta{transform:translateY(0);opacity:1;}
+  .photo-name{font-size:12px;font-weight:600;}
+  .photo-cat{font-size:10px;color:#d4a017;}
+  .photo.tall{grid-row:span 2;}
+  .photo.wide{grid-column:span 2;}
+  ::-webkit-scrollbar{display:none;}
+</style>
+</head>
+<body>
+<div class="sidebar">
+  <div class="logo-box">📷</div>
+  <div class="nav-icon active">🖼</div>
+  <div class="nav-icon">📁</div>
+  <div class="nav-icon">📅</div>
+  <div class="nav-icon">⭐</div>
+  <div class="nav-icon">🏷</div>
+  <div style="margin-top:auto;"><div class="nav-icon">⚙️</div></div>
+</div>
+<div class="main">
+  <header>
+    <div class="header-left">
+      <div>
+        <div style="font-size:11px;color:#d4a017;font-weight:700;letter-spacing:1px;">PPAS</div>
+        <div class="header-title">Visual Archive</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <input class="search" placeholder="🔍  Search by tag or title..." />
+      <button class="view-btn active">Grid</button>
+      <button class="view-btn">List</button>
+    </div>
+  </header>
+  <div class="filter-row">
+    <span class="filter active">All Photos</span>
+    <span class="filter">Portrait</span>
+    <span class="filter">Events</span>
+    <span class="filter">Graduation</span>
+    <span class="filter">Campus</span>
+    <span class="filter">Studio</span>
+    <span class="filter">Outdoor</span>
+    <span class="filter">Wedding</span>
+  </div>
+  <div class="gallery">
+    <div class="photo" style="background:#1a120a;"><div style="width:100%;height:100%;background:linear-gradient(135deg,#3d2b1f,#1a120a);display:flex;align-items:center;justify-content:center;font-size:40px;color:#d4a017;">👤</div><div class="photo-overlay"></div><div class="photo-meta"><div class="photo-name">Portrait Session</div><div class="photo-cat">Studio · Dec 2024</div></div></div>
+    <div class="photo tall" style="background:#0a1a14;"><div style="width:100%;height:100%;background:linear-gradient(135deg,#1a3d2b,#0a1a14);display:flex;align-items:center;justify-content:center;font-size:50px;">🎓</div><div class="photo-overlay"></div><div class="photo-meta"><div class="photo-name">Graduation Ceremony</div><div class="photo-cat">Event · Nov 2024</div></div></div>
+    <div class="photo" style="background:#1a1a2e;"><div style="width:100%;height:100%;background:linear-gradient(135deg,#2b2b4a,#1a1a2e);display:flex;align-items:center;justify-content:center;font-size:40px;">🌆</div><div class="photo-overlay"></div><div class="photo-meta"><div class="photo-name">Campus Evening</div><div class="photo-cat">Landscape · Oct 2024</div></div></div>
+    <div class="photo" style="background:#2e1a0a;"><div style="width:100%;height:100%;background:linear-gradient(135deg,#4a2b1a,#2e1a0a);display:flex;align-items:center;justify-content:center;font-size:40px;">💍</div><div class="photo-overlay"></div><div class="photo-meta"><div class="photo-name">Wedding Shoot</div><div class="photo-cat">Wedding · Sep 2024</div></div></div>
+    <div class="photo wide" style="background:#0a1a2e;"><div style="width:100%;height:100%;background:linear-gradient(135deg,#1a2b4a,#0a1a2e);display:flex;align-items:center;justify-content:center;font-size:50px;">🎉</div><div class="photo-overlay"></div><div class="photo-meta"><div class="photo-name">Annual University Gala</div><div class="photo-cat">Event · Aug 2024</div></div></div>
+    <div class="photo" style="background:#1a2e0a;"><div style="width:100%;height:100%;background:linear-gradient(135deg,#2b4a1a,#1a2e0a);display:flex;align-items:center;justify-content:center;font-size:40px;">🌳</div><div class="photo-overlay"></div><div class="photo-meta"><div class="photo-name">Outdoor Portraits</div><div class="photo-cat">Outdoor · Jul 2024</div></div></div>
+    <div class="photo" style="background:#2e0a1a;"><div style="width:100%;height:100%;background:linear-gradient(135deg,#4a1a2b,#2e0a1a);display:flex;align-items:center;justify-content:center;font-size:40px;">🤝</div><div class="photo-overlay"></div><div class="photo-meta"><div class="photo-name">Corporate Event</div><div class="photo-cat">Event · Jun 2024</div></div></div>
+  </div>
+</div>
+</body>
+</html>

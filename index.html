@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raymond Pute — Portfolio</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!--================ NAVBAR ================-->
+    <header>
+        <a href="#" class="logo">
+            raymond<span>.</span>
+        </a>
+        <nav>
+            <a href="#home" class="active">Home</a>
+            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </nav>
+        <div id="menu-btn">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </header>
+
+    <!--================ HERO SECTION ================-->
+    <section class="home" id="home">
+        <div class="home-content">
+            <h3>Hello, I'm</h3>
+            <h1>Raymond Pute</h1>
+            <h2>
+                <span class="typing"></span>
+            </h2>
+            <p>
+                ICT graduate working across full-stack development, machine learning, and design. If it needs to be
+                built, coded, or designed, I can take it on.
+            </p>
+            <div class="buttons">
+                <a href="#contact" class="btn">
+                    Hire Me
+                </a>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=raymondpute22@gmail.com" target="_blank"
+                    class="btn btn2">
+                    Email Me
+                </a>
+            </div>
+            <div class="socials">
+                <a href="https://wa.me/265985607636" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=raymondpute22@gmail.com" target="_blank">
+                    <i class="fa-solid fa-envelope"></i>
+                </a>
+            </div>
+        </div>
+        <div class="home-image">
+            <div class="circle"></div>
+            <img src="images/profile.jpg" alt="Raymond Pute">
+
+            <div class="floating icon-python" title="Python">
+                <i class="fa-brands fa-python"></i>
+            </div>
+            <div class="floating icon-flutter" title="Flutter">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                    <path d="M14.314 0L2.3 12 6 15.7 21.684.013h-7.37zm.014 11.072L7.857 17.53l6.47 6.47H21.7l-6.46-6.468 6.46-6.46h-7.372z"/>
+                </svg>
+            </div>
+            <div class="floating icon-db" title="Database">
+                <i class="fa-solid fa-database"></i>
+            </div>
+            <div class="floating icon-java" title="Java">
+                <i class="fa-brands fa-java"></i>
+            </div>
+            <div class="floating icon-php" title="PHP">
+                <i class="fa-brands fa-php"></i>
+            </div>
+            <div class="floating icon-js" title="JavaScript">
+                <i class="fa-brands fa-js"></i>
+            </div>
+        </div>
+    </section>
+
+    <!--================ ABOUT ================-->
+    <section class="about" id="about">
+        <h2 class="section-title">
+            About Me
+        </h2>
+        <div class="about-container">
+            <div class="about-image">
+                <img src="images/about.jpg" alt="About Raymond Pute">
+            </div>
+            <div class="about-text">
+                <h3>
+                    Full-Stack Developer
+                </h3>
+                <p>
+                    I design and build modern, responsive, user-friendly websites, mobile apps, and machine learning
+                    models.
+                    From setting up a robust backend in Python or PHP, to crafting beautiful UIs with Flutter and React,
+                    my passion is transforming ideas into elegant, high-performing digital experiences end-to-end.
+                </p>
+                <a href="#projects" class="btn">
+                    My Work
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!--================ SKILLS ================-->
+    <section class="skills" id="skills">
+        <h2 class="section-title">
+            Skills
+        </h2>
+        <div class="skills-container">
+            <div class="skill-card">
+                <i class="fa-brands fa-python"></i>
+                <h3>Python / ML</h3>
+            </div>
+            <div class="skill-card">
+                <i class="fa-solid fa-mobile-screen"></i>
+                <h3>Flutter / Dart</h3>
+            </div>
+            <div class="skill-card">
+                <i class="fa-brands fa-js"></i>
+                <h3>JavaScript</h3>
+            </div>
+            <div class="skill-card">
+                <i class="fa-brands fa-php"></i>
+                <h3>PHP</h3>
+            </div>
+            <div class="skill-card">
+                <i class="fa-brands fa-java"></i>
+                <h3>Java</h3>
+            </div>
+            <div class="skill-card">
+                <i class="fa-solid fa-database"></i>
+                <h3>Database Design</h3>
+            </div>
+            <div class="skill-card">
+                <i class="fa-solid fa-bezier-curve"></i>
+                <h3>Graphics Design</h3>
+            </div>
+            <div class="skill-card">
+                <i class="fa-solid fa-palette"></i>
+                <h3>Artwork</h3>
+            </div>
+        </div>
+    </section>
+
+    <!--================ PROJECTS ================-->
+    <section class="projects" id="projects">
+        <h2 class="section-title">
+            Projects
+        </h2>
+        <div class="project-container">
+
+            <!-- Twitter -->
+            <div class="project-card">
+                <div class="preview-wrap" data-type="iframe" data-src="ui/twitter.html" data-title="Twitter Clone">
+                    <iframe src="ui/twitter.html" class="project-iframe" scrolling="no"
+                        title="Twitter Clone UI"></iframe>
+                    <div class="preview-overlay"><span>&#9654; View</span></div>
+                </div>
+                <div class="project-info">
+                    <h3>Twitter Clone</h3>
+                    <p>Full-stack social media app with authentication, posting, liking, and real-time feed. Built with
+                        Flutter and Firebase.</p>
+                </div>
+            </div>
+
+            <!-- Marketplace -->
+            <div class="project-card">
+                <div class="preview-wrap" data-type="iframe" data-src="ui/marketplace.html" data-title="Marketplace">
+                    <iframe src="ui/marketplace.html" class="project-iframe" scrolling="no"
+                        title="Marketplace UI"></iframe>
+                    <div class="preview-overlay"><span>&#9654; View</span></div>
+                </div>
+                <div class="project-info">
+                    <h3>Marketplace</h3>
+                    <p>Multi-vendor e-commerce platform with inventory management and secure payments. Built with PHP
+                        &amp; Laravel.</p>
+                </div>
+            </div>
+
+            <!-- Diabetes -->
+            <div class="project-card">
+                <div class="preview-wrap" data-type="iframe" data-src="ui/diabetes.html"
+                    data-title="Diabetes Alert System">
+                    <iframe src="ui/diabetes.html" class="project-iframe" scrolling="no"
+                        title="Diabetes Alert UI"></iframe>
+                    <div class="preview-overlay"><span>&#9654; View</span></div>
+                </div>
+                <div class="project-info">
+                    <h3>Diabetes Alert System</h3>
+                    <p>Predictive surveillance system using ML to monitor risk factors and trigger early warnings. Built
+                        with Python &amp; Flask.</p>
+                </div>
+            </div>
+
+            <!-- Quadratic Solver -->
+            <div class="project-card">
+                <div class="preview-wrap" data-type="iframe" data-src="ui/solver.html" data-title="Quadratic Solver">
+                    <iframe src="ui/solver.html" class="project-iframe" scrolling="no"
+                        title="Quadratic Solver UI"></iframe>
+                    <div class="preview-overlay"><span>&#9654; View</span></div>
+                </div>
+                <div class="project-info">
+                    <h3>Quadratic Solver</h3>
+                    <p>Fast computational tool to solve complex quadratic equations and provide step-by-step breakdowns.
+                        Built with HTML/JS.</p>
+                </div>
+            </div>
+
+            <!-- Study Resource -->
+            <div class="project-card">
+                <div class="preview-wrap" data-type="iframe" data-src="ui/quiz.html"
+                    data-title="Interactive Study Resource">
+                    <iframe src="ui/quiz.html" class="project-iframe" scrolling="no" title="Study Quiz UI"></iframe>
+                    <div class="preview-overlay"><span>&#9654; View</span></div>
+                </div>
+                <div class="project-info">
+                    <h3>Interactive Study Resource</h3>
+                    <p>A 50-question interactive quiz tool covering big data, machine learning, and IoT topics.</p>
+                </div>
+            </div>
+
+            <!-- Cargo -->
+            <div class="project-card">
+                <div class="preview-wrap" data-type="gallery"
+                    data-images="images/cargo1.png,images/cargo2.png,images/cargo3.png,images/cargo4.png"
+                    data-title="Cargo &amp; Delivery Platform">
+                    <div class="project-gallery">
+                        <img src="images/cargo1.png" alt="Cargo Platform">
+                        <img src="images/cargo2.png" alt="Cargo Platform">
+                        <img src="images/cargo3.png" alt="Cargo Platform">
+                        <img src="images/cargo4.png" alt="Cargo Platform">
+                    </div>
+                    <div class="preview-overlay"><span>&#9654; View</span></div>
+                </div>
+                <div class="project-info">
+                    <h3>Cargo &amp; Delivery Platform</h3>
+                    <p>Full system design for a delivery platform with OpenStreetMap routing and PayChangu. Built with
+                        Flutter.</p>
+                </div>
+            </div>
+
+            <!-- Photo Archive -->
+            <div class="project-card">
+                <div class="preview-wrap" data-type="gallery" data-images="images/archive1.png"
+                    data-iframe="ui/archive2.html" data-title="Photo Portfolio &amp; Archive System">
+                    <div class="project-gallery project-gallery-2">
+                        <img src="images/archive1.png" alt="Photo Portfolio &amp; Archive System">
+                        <iframe src="ui/archive2.html" class="project-iframe" scrolling="no"
+                            title="Archive Gallery View"></iframe>
+                    </div>
+                    <div class="preview-overlay"><span>&#9654; View</span></div>
+                </div>
+                <div class="project-info">
+                    <h3>Photo Portfolio &amp; Archive System</h3>
+                    <p>A beautifully curated photography gallery integrated with a secure digital archiving solution for
+                        organizing and storing visual assets.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!--================ CONTACT ================-->
+    <section class="contact" id="contact">
+        <h2 class="section-title">
+            Contact <span>Me</span>
+        </h2>
+        <p class="contact-desc">
+            Have a project in mind, need a full-stack solution, or want to discuss a freelance opportunity? Send me a
+            message below with your requirements or questions, and I'll get back to you promptly.
+        </p>
+        <form id="contact-form">
+            <!-- FormSubmit Configurations -->
+            <input type="hidden" name="_subject" value="New Contact Form Submission from Portfolio!">
+            <input type="hidden" name="_template" value="table">
+
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <input type="tel" name="phone" placeholder="Your Phone Number (Optional)">
+            <textarea name="message" placeholder="Your Message" required></textarea>
+            <button type="submit" class="btn" id="submit-btn">
+                Send Message
+            </button>
+            <div id="form-status" style="display:none; font-size:14px; margin-top:10px; font-weight:600;"></div>
+        </form>
+    </section>
+
+    <!--================ FOOTER ================-->
+    <footer>
+        <p>
+            © 2026 Raymond Pute Portfolio | All Rights Reserved.
+        </p>
+    </footer>
+
+    <!--================ FULLSCREEN VIEWER ================-->
+    <div id="pv-overlay" class="pv-overlay">
+        <button class="pv-close" id="pv-close">&#10005;</button>
+        <!-- iframe view -->
+        <iframe id="pv-iframe" class="pv-iframe" src="" scrolling="yes"></iframe>
+        <!-- image / gallery view -->
+        <div id="pv-gallery" class="pv-gallery">
+            <button class="pv-arrow" id="pv-prev">&#8249;</button>
+            <img id="pv-img" src="" alt="">
+            <button class="pv-arrow" id="pv-next">&#8250;</button>
+        </div>
+        <div id="pv-dots" class="pv-dots"></div>
+    </div>
+
+    <!-- Typed JS -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <!-- Main JS -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>

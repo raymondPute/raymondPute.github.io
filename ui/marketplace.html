@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#f8f9fb;color:#111;height:100vh;overflow:hidden;display:flex;flex-direction:column;}
+
+/* NAV */
+nav{background:#fff;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;border-bottom:1px solid #f0f0f0;position:sticky;top:0;z-index:100;}
+.brand{font-size:18px;font-weight:800;letter-spacing:-.5px;color:#111;}
+.brand span{color:#e85d04;}
+.nav-links{display:flex;gap:24px;}
+.nav-links a{text-decoration:none;font-size:13px;font-weight:500;color:#666;transition:.15s;}
+.nav-links a.active{color:#111;font-weight:600;}
+.nav-right{display:flex;align-items:center;gap:12px;}
+.search{background:#f3f4f6;border:none;border-radius:20px;padding:7px 14px 7px 32px;font-size:13px;outline:none;width:180px;color:#111;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='%23999'%3E%3Cpath d='M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:10px center;}
+.cart-icon{position:relative;width:36px;height:36px;background:#f3f4f6;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;}
+.cart-badge{position:absolute;top:-2px;right:-2px;width:16px;height:16px;background:#e85d04;border-radius:50%;font-size:10px;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;}
+.sign-btn{background:#e85d04;color:#fff;border:none;padding:7px 18px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;}
+
+/* HERO STRIP */
+.hero-strip{background:linear-gradient(100deg,#fff7f2,#fff);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f0f0f0;}
+.hero-strip h1{font-size:22px;font-weight:800;line-height:1.25;letter-spacing:-.5px;}
+.hero-strip h1 span{color:#e85d04;}
+.hero-strip p{font-size:13px;color:#888;margin-top:4px;}
+.hero-cta{background:#e85d04;color:#fff;border:none;padding:9px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;margin-top:12px;display:block;}
+.hero-emoji{font-size:52px;line-height:1;}
+
+/* CATS */
+.cats{background:#fff;border-bottom:1px solid #f0f0f0;padding:0 24px;display:flex;gap:4px;overflow-x:auto;}
+.cats::-webkit-scrollbar{display:none;}
+.cat{padding:12px 16px;font-size:13px;font-weight:500;color:#888;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:.15s;}
+.cat.active{color:#e85d04;border-color:#e85d04;font-weight:600;}
+.cat:hover:not(.active){color:#333;}
+
+/* BODY */
+.body{flex:1;overflow-y:auto;padding:20px 24px;display:grid;grid-template-columns:1fr 280px;gap:20px;}
+.body::-webkit-scrollbar{width:0;}
+
+/* SECTION */
+.sec-title{font-size:15px;font-weight:700;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;}
+.see-all{font-size:12px;font-weight:500;color:#e85d04;cursor:pointer;}
+
+/* PRODUCTS */
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px;}
+.pcard{background:#fff;border-radius:12px;overflow:hidden;border:1px solid #f0f0f0;cursor:pointer;transition:.2s;}
+.pcard:hover{box-shadow:0 4px 20px rgba(0,0,0,.08);transform:translateY(-2px);}
+.pcard-img{height:80px;display:flex;align-items:center;justify-content:center;font-size:32px;border-bottom:1px solid #f5f5f5;}
+.pcard-body{padding:10px 12px;}
+.pcard-name{font-size:12px;font-weight:600;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pcard-price{font-size:14px;font-weight:800;color:#e85d04;}
+.pcard-old{font-size:11px;color:#bbb;text-decoration:line-through;margin-left:4px;}
+.pcard-footer{display:flex;justify-content:space-between;align-items:center;margin-top:6px;}
+.stars{font-size:10px;color:#f5a623;}
+.add{width:24px;height:24px;border-radius:50%;background:#e85d04;color:#fff;border:none;font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;}
+
+/* RIGHT PANEL */
+.right-panel{display:flex;flex-direction:column;gap:14px;}
+.panel{background:#fff;border-radius:12px;border:1px solid #f0f0f0;padding:14px;}
+.panel-title{font-size:13px;font-weight:700;margin-bottom:10px;}
+.promo{background:linear-gradient(135deg,#e85d04,#ff9a4a);border-radius:12px;padding:16px;color:#fff;}
+.promo-label{font-size:10px;font-weight:700;opacity:.8;letter-spacing:1px;text-transform:uppercase;}
+.promo-title{font-size:18px;font-weight:800;margin:4px 0;}
+.promo-sub{font-size:12px;opacity:.85;}
+.promo-btn{background:#fff;color:#e85d04;border:none;padding:7px 16px;border-radius:6px;font-size:12px;font-weight:700;margin-top:12px;cursor:pointer;}
+.order-item{display:flex;gap:10px;align-items:center;padding:7px 0;border-bottom:1px solid #f5f5f5;}
+.order-item:last-child{border-bottom:none;}
+.order-img{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;background:#f8f9fb;}
+.order-info{flex:1;}
+.order-name{font-size:12px;font-weight:600;}
+.order-status{font-size:11px;color:#888;margin-top:2px;}
+.status-dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:4px;}
+.delivered{background:#22c55e;}
+.processing{background:#f59e0b;}
+.shipped{background:#3b82f6;}
+</style>
+</head>
+<body>
+<nav>
+  <div class="brand">Market<span>place</span></div>
+  <div class="nav-links">
+    <a href="#" class="active">Home</a>
+    <a href="#">Shop</a>
+    <a href="#">Categories</a>
+    <a href="#">Deals</a>
+  </div>
+  <div class="nav-right">
+    <input class="search" placeholder="Search products...">
+    <div class="cart-icon">🛒<div class="cart-badge">3</div></div>
+    <button class="sign-btn">Sign In</button>
+  </div>
+</nav>
+
+<div class="hero-strip">
+  <div>
+    <h1>Shop Local.<br><span>Live Better.</span></h1>
+    <p>Thousands of products from local Malawian vendors</p>
+    <button class="hero-cta">Browse All Products →</button>
+  </div>
+  <div class="hero-emoji">🛍️</div>
+</div>
+
+<div class="cats">
+  <div class="cat active">All</div>
+  <div class="cat">Electronics</div>
+  <div class="cat">Fashion</div>
+  <div class="cat">Food</div>
+  <div class="cat">Home</div>
+  <div class="cat">Beauty</div>
+  <div class="cat">Sports</div>
+  <div class="cat">Books</div>
+</div>
+
+<div class="body">
+  <div>
+    <div class="sec-title">Featured <span class="see-all">See all</span></div>
+    <div class="grid">
+      <div class="pcard"><div class="pcard-img" style="background:#f0f7ff;">📱</div><div class="pcard-body"><div class="pcard-name">Smartphone X12</div><div><span class="pcard-price">MWK 89K</span><span class="pcard-old">110K</span></div><div class="pcard-footer"><span class="stars">★★★★★</span><button class="add">+</button></div></div></div>
+      <div class="pcard"><div class="pcard-img" style="background:#f7f0ff;">💻</div><div class="pcard-body"><div class="pcard-name">Laptop Pro 14</div><div><span class="pcard-price">MWK 450K</span></div><div class="pcard-footer"><span class="stars">★★★★☆</span><button class="add">+</button></div></div></div>
+      <div class="pcard"><div class="pcard-img" style="background:#f0fff4;">👟</div><div class="pcard-body"><div class="pcard-name">Nike Air Max</div><div><span class="pcard-price">MWK 32K</span><span class="pcard-old">45K</span></div><div class="pcard-footer"><span class="stars">★★★★★</span><button class="add">+</button></div></div></div>
+      <div class="pcard"><div class="pcard-img" style="background:#fff8f0;">🎧</div><div class="pcard-body"><div class="pcard-name">Headphones</div><div><span class="pcard-price">MWK 28K</span></div><div class="pcard-footer"><span class="stars">★★★★☆</span><button class="add">+</button></div></div></div>
+      <div class="pcard"><div class="pcard-img" style="background:#fff0f6;">👗</div><div class="pcard-body"><div class="pcard-name">Summer Dress</div><div><span class="pcard-price">MWK 12.5K</span></div><div class="pcard-footer"><span class="stars">★★★★★</span><button class="add">+</button></div></div></div>
+      <div class="pcard"><div class="pcard-img" style="background:#f8f0ff;">⌚</div><div class="pcard-body"><div class="pcard-name">Smart Watch</div><div><span class="pcard-price">MWK 55K</span><span class="pcard-old">70K</span></div><div class="pcard-footer"><span class="stars">★★★★★</span><button class="add">+</button></div></div></div>
+    </div>
+  </div>
+
+  <div class="right-panel">
+    <div class="promo">
+      <div class="promo-label">Weekend Deal</div>
+      <div class="promo-title">30% Off<br>Electronics</div>
+      <div class="promo-sub">Use code: NSIKA30</div>
+      <button class="promo-btn">Shop Now</button>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Recent Orders</div>
+      <div class="order-item"><div class="order-img">📱</div><div class="order-info"><div class="order-name">Smartphone X12</div><div class="order-status"><span class="status-dot delivered"></span>Delivered</div></div></div>
+      <div class="order-item"><div class="order-img">👟</div><div class="order-info"><div class="order-name">Nike Air Max</div><div class="order-status"><span class="status-dot shipped"></span>Shipped</div></div></div>
+      <div class="order-item"><div class="order-img">🎧</div><div class="order-info"><div class="order-name">Headphones</div><div class="order-status"><span class="status-dot processing"></span>Processing</div></div></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#f0f0f0;display:flex;align-items:center;justify-content:center;height:100vh;overflow:hidden;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;}
+
+.phone{width:340px;height:680px;background:#000;border-radius:44px;box-shadow:0 0 0 10px #1a1a1a,0 30px 60px rgba(0,0,0,.5);overflow:hidden;position:relative;display:flex;flex-direction:column;}
+
+/* STATUS BAR */
+.status{height:44px;background:#000;display:flex;align-items:center;justify-content:space-between;padding:0 24px;flex-shrink:0;}
+.status-time{font-size:15px;font-weight:700;color:#fff;letter-spacing:-.3px;}
+.status-icons{display:flex;gap:5px;align-items:center;}
+.status-icons span{font-size:12px;color:#fff;}
+
+/* APP SHELL */
+.app{flex:1;background:#000;display:flex;flex-direction:column;overflow:hidden;}
+
+/* TOP NAV */
+.topnav{height:52px;background:#000;display:flex;align-items:center;justify-content:space-between;padding:0 16px;flex-shrink:0;}
+.profile-pic{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#ff7b00,#ff4500);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;}
+.x-logo{font-size:20px;font-weight:900;color:#fff;letter-spacing:-1px;}
+.top-icon{width:32px;height:32px;display:flex;align-items:center;justify-content:center;}
+.top-icon svg{width:20px;height:20px;fill:#fff;}
+
+/* TABS */
+.tabs{display:flex;border-bottom:1px solid #2f3336;flex-shrink:0;}
+.tab{flex:1;text-align:center;padding:14px 0;font-size:14px;color:#536471;position:relative;cursor:pointer;}
+.tab.active{color:#e7e9ea;font-weight:700;}
+.tab.active::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:40px;height:3px;background:#1d9bf0;border-radius:2px;}
+
+/* FEED */
+.feed{flex:1;overflow-y:auto;}
+.feed::-webkit-scrollbar{display:none;}
+
+/* TWEET */
+.tweet{display:flex;gap:10px;padding:12px 14px;border-bottom:1px solid #1a1a1a;}
+.ava{width:40px;height:40px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:#fff;}
+.tw-body{flex:1;min-width:0;}
+.tw-top{display:flex;align-items:center;gap:4px;flex-wrap:nowrap;margin-bottom:3px;}
+.tw-name{font-size:14px;font-weight:700;color:#e7e9ea;white-space:nowrap;}
+.tw-handle{font-size:13px;color:#536471;white-space:nowrap;}
+.tw-dot{color:#536471;font-size:13px;}
+.tw-time{font-size:13px;color:#536471;white-space:nowrap;}
+.tw-text{font-size:14px;line-height:1.4;color:#e7e9ea;margin-bottom:10px;}
+.tw-card{background:#16181c;border:1px solid #2f3336;border-radius:16px;padding:12px;margin-bottom:10px;}
+.tw-card-title{font-size:13px;font-weight:700;color:#e7e9ea;margin-bottom:2px;}
+.tw-card-sub{font-size:12px;color:#536471;}
+.media{width:100%;height:130px;border-radius:14px;background:linear-gradient(135deg,#16181c,#1a1a2e);display:flex;align-items:center;justify-content:center;font-size:36px;margin-bottom:10px;border:1px solid #2f3336;}
+.tw-actions{display:flex;justify-content:space-between;margin-top:2px;}
+.act{display:flex;align-items:center;gap:5px;color:#536471;font-size:12px;padding:4px;border-radius:20px;}
+.act svg{width:16px;height:16px;fill:currentColor;}
+.act.liked{color:#f91880;}
+.act.rted{color:#00ba7c;}
+
+/* COMPOSE FAB */
+.fab{position:absolute;bottom:68px;right:14px;width:52px;height:52px;background:#1d9bf0;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(29,155,240,.5);}
+.fab svg{width:22px;height:22px;fill:#fff;}
+
+/* BOTTOM NAV */
+.bottomnav{height:52px;background:#000;border-top:1px solid #1a1a1a;display:flex;align-items:center;justify-content:space-around;padding-bottom:4px;flex-shrink:0;}
+.bnav{flex:1;display:flex;align-items:center;justify-content:center;height:100%;}
+.bnav svg{width:24px;height:24px;fill:#e7e9ea;}
+.bnav.active svg{fill:#e7e9ea;}
+.bnav:not(.active) svg{fill:#536471;}
+.notif-dot{position:relative;}
+.ndot{position:absolute;top:0;right:-2px;width:7px;height:7px;background:#1d9bf0;border-radius:50%;border:2px solid #000;}
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="status">
+    <span class="status-time">9:45</span>
+    <div class="status-icons">
+      <span>▶</span>
+      <span>●●●●</span>
+      <span>WiFi</span>
+      <span>86%</span>
+    </div>
+  </div>
+
+  <div class="app">
+    <div class="topnav">
+      <div class="profile-pic">R</div>
+      <div class="x-logo">𝕏</div>
+      <div class="top-icon">
+        <svg viewBox="0 0 24 24"><path d="M19.993 9.042C19.48 5.017 16.054 2 11.996 2s-7.49 3.021-7.999 7.051L2.866 18H7.1c.463 1.723 2.01 3 3.898 3 1.888 0 3.434-1.277 3.898-3h4.228l-1.13-8.958zM12 19c-.711 0-1.33-.3-1.787-.779l3.572.001C13.33 18.7 12.711 19 12 19z"/></svg>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active">For you</div>
+      <div class="tab">Following</div>
+    </div>
+
+    <div class="feed">
+      <!-- Tweet 1 -->
+      <div class="tweet">
+        <div class="ava" style="background:linear-gradient(135deg,#1d9bf0,#0066cc)">E</div>
+        <div class="tw-body">
+          <div class="tw-top"><span class="tw-name">Elon Musk</span><span class="tw-dot">·</span><span class="tw-time">2h</span></div>
+          <div class="tw-handle">@elonmusk</div>
+          <div class="tw-text" style="margin-top:4px">The future belongs to those who build. Stop consuming, start creating. 🚀</div>
+          <div class="tw-actions">
+            <div class="act"><svg viewBox="0 0 24 24"><path d="M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 7.501 3.58 7.501 8 0 4.421-3.012 8.001-7.501 8.001h-4.09l-3.26 3.296c-.37.373-.99.109-.99-.415v-2.881C2.756 15.485 1.751 12.892 1.751 10z"/></svg> 8.2K</div>
+            <div class="act rted"><svg viewBox="0 0 24 24"><path d="M4.5 3.88l4.432 4.14-1.364 1.46L5.5 7.55V16c0 1.1.896 2 2 2H13v2H7.5c-2.209 0-4-1.79-4-4V7.55L1.432 9.48.068 8.02 4.5 3.88zM16.5 3H11V1h5.5c2.209 0 4 1.79 4 4v8.45l2.068-1.93 1.364 1.46L19.5 17.12l-4.432-4.14 1.364-1.46 2.068 1.93V5c0-1.1-.896-2-2-2z"/></svg> 15.4K</div>
+            <div class="act liked"><svg viewBox="0 0 24 24"><path d="M20.884 13.19c-1.351 2.48-4.001 5.12-8.379 7.67l-.504.3-.504-.3c-4.379-2.55-7.029-5.19-8.382-7.67-1.36-2.5-1.41-4.86-.514-6.67.887-1.79 2.647-2.91 4.601-3.01 1.651-.09 3.368.56 4.798 2.01 1.429-1.45 3.146-2.1 4.796-2.01 1.954.1 3.714 1.22 4.601 3.01.896 1.81.846 4.17-.514 6.67z"/></svg> 92.1K</div>
+            <div class="act"><svg viewBox="0 0 24 24"><path d="M12 2.59l5.7 5.7-1.41 1.42L13 6.41V16h-2V6.41l-3.3 3.3-1.41-1.42L12 2.59z"/></svg></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tweet 2 -->
+      <div class="tweet">
+        <div class="ava" style="background:linear-gradient(135deg,#7c3aed,#4f1dad)">S</div>
+        <div class="tw-body">
+          <div class="tw-top"><span class="tw-name">Sarah Chen</span><span class="tw-dot">·</span><span class="tw-time">4h</span></div>
+          <div class="tw-handle">@sarahbuilds</div>
+          <div class="tw-text" style="margin-top:4px">Flutter 3.24 dropped and it's insane. The performance on mobile is night and day. 👀</div>
+          <div class="media">📱</div>
+          <div class="tw-actions">
+            <div class="act"><svg viewBox="0 0 24 24"><path d="M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 7.501 3.58 7.501 8 0 4.421-3.012 8.001-7.501 8.001h-4.09l-3.26 3.296c-.37.373-.99.109-.99-.415v-2.881C2.756 15.485 1.751 12.892 1.751 10z"/></svg> 412</div>
+            <div class="act"><svg viewBox="0 0 24 24"><path d="M4.5 3.88l4.432 4.14-1.364 1.46L5.5 7.55V16c0 1.1.896 2 2 2H13v2H7.5c-2.209 0-4-1.79-4-4V7.55L1.432 9.48.068 8.02 4.5 3.88zM16.5 3H11V1h5.5c2.209 0 4 1.79 4 4v8.45l2.068-1.93 1.364 1.46L19.5 17.12l-4.432-4.14 1.364-1.46 2.068 1.93V5c0-1.1-.896-2-2-2z"/></svg> 1.8K</div>
+            <div class="act"><svg viewBox="0 0 24 24"><path d="M16.697 5.5c-1.222-.06-2.679.51-3.89 2.16l-.805 1.09-.806-1.09C9.984 6.01 8.526 5.44 7.304 5.5c-1.243.07-2.349.78-2.91 1.91-.552 1.12-.633 2.78.479 4.82 1.074 1.97 3.257 4.27 7.129 6.61 3.87-2.34 6.052-4.64 7.126-6.61 1.111-2.04 1.03-3.7.477-4.82-.561-1.13-1.666-1.84-2.908-1.91z"/></svg> 7.3K</div>
+            <div class="act"><svg viewBox="0 0 24 24"><path d="M12 2.59l5.7 5.7-1.41 1.42L13 6.41V16h-2V6.41l-3.3 3.3-1.41-1.42L12 2.59z"/></svg></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tweet 3 -->
+      <div class="tweet">
+        <div class="ava" style="background:linear-gradient(135deg,#00ba7c,#006644)">A</div>
+        <div class="tw-body">
+          <div class="tw-top"><span class="tw-name">Amara Dev</span><span class="tw-dot">·</span><span class="tw-time">9h</span></div>
+          <div class="tw-handle">@amaracodes</div>
+          <div class="tw-text" style="margin-top:4px">Your GitHub profile is your CV now. Keep it clean, keep it active. No degree needed — just ship code. 👨‍💻</div>
+          <div class="tw-actions">
+            <div class="act"><svg viewBox="0 0 24 24"><path d="M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 7.501 3.58 7.501 8 0 4.421-3.012 8.001-7.501 8.001h-4.09l-3.26 3.296c-.37.373-.99.109-.99-.415v-2.881C2.756 15.485 1.751 12.892 1.751 10z"/></svg> 1.9K</div>
+            <div class="act rted"><svg viewBox="0 0 24 24"><path d="M4.5 3.88l4.432 4.14-1.364 1.46L5.5 7.55V16c0 1.1.896 2 2 2H13v2H7.5c-2.209 0-4-1.79-4-4V7.55L1.432 9.48.068 8.02 4.5 3.88zM16.5 3H11V1h5.5c2.209 0 4 1.79 4 4v8.45l2.068-1.93 1.364 1.46L19.5 17.12l-4.432-4.14 1.364-1.46 2.068 1.93V5c0-1.1-.896-2-2-2z"/></svg> 8.7K</div>
+            <div class="act liked"><svg viewBox="0 0 24 24"><path d="M20.884 13.19c-1.351 2.48-4.001 5.12-8.379 7.67l-.504.3-.504-.3c-4.379-2.55-7.029-5.19-8.382-7.67-1.36-2.5-1.41-4.86-.514-6.67.887-1.79 2.647-2.91 4.601-3.01 1.651-.09 3.368.56 4.798 2.01 1.429-1.45 3.146-2.1 4.796-2.01 1.954.1 3.714 1.22 4.601 3.01.896 1.81.846 4.17-.514 6.67z"/></svg> 33.5K</div>
+            <div class="act"><svg viewBox="0 0 24 24"><path d="M12 2.59l5.7 5.7-1.41 1.42L13 6.41V16h-2V6.41l-3.3 3.3-1.41-1.42L12 2.59z"/></svg></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tweet 4 -->
+      <div class="tweet">
+        <div class="ava" style="background:linear-gradient(135deg,#f59e0b,#d97706)">T</div>
+        <div class="tw-body">
+          <div class="tw-top"><span class="tw-name">Tech Malawi</span><span class="tw-dot">·</span><span class="tw-time">12h</span></div>
+          <div class="tw-handle">@techmalawi</div>
+          <div class="tw-text" style="margin-top:4px">The developer community in Malawi is growing fast. Let's keep supporting each other! 🇲🇼💻</div>
+          <div class="tw-card">
+            <div class="tw-card-title">TechMalawi Summit 2026</div>
+            <div class="tw-card-sub">techmalawi.org · Registration open</div>
+          </div>
+          <div class="tw-actions">
+            <div class="act"><svg viewBox="0 0 24 24"><path d="M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 7.501 3.58 7.501 8 0 4.421-3.012 8.001-7.501 8.001h-4.09l-3.26 3.296c-.37.373-.99.109-.99-.415v-2.881C2.756 15.485 1.751 12.892 1.751 10z"/></svg> 234</div>
+            <div class="act"><svg viewBox="0 0 24 24"><path d="M4.5 3.88l4.432 4.14-1.364 1.46L5.5 7.55V16c0 1.1.896 2 2 2H13v2H7.5c-2.209 0-4-1.79-4-4V7.55L1.432 9.48.068 8.02 4.5 3.88zM16.5 3H11V1h5.5c2.209 0 4 1.79 4 4v8.45l2.068-1.93 1.364 1.46L19.5 17.12l-4.432-4.14 1.364-1.46 2.068 1.93V5c0-1.1-.896-2-2-2z"/></svg> 891</div>
+            <div class="act"><svg viewBox="0 0 24 24"><path d="M16.697 5.5c-1.222-.06-2.679.51-3.89 2.16l-.805 1.09-.806-1.09C9.984 6.01 8.526 5.44 7.304 5.5c-1.243.07-2.349.78-2.91 1.91-.552 1.12-.633 2.78.479 4.82 1.074 1.97 3.257 4.27 7.129 6.61 3.87-2.34 6.052-4.64 7.126-6.61 1.111-2.04 1.03-3.7.477-4.82-.561-1.13-1.666-1.84-2.908-1.91z"/></svg> 4.2K</div>
+            <div class="act"><svg viewBox="0 0 24 24"><path d="M12 2.59l5.7 5.7-1.41 1.42L13 6.41V16h-2V6.41l-3.3 3.3-1.41-1.42L12 2.59z"/></svg></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAB -->
+    <div class="fab">
+      <svg viewBox="0 0 24 24"><path d="M23 3c-6.62-.1-10.38 2.421-13.05 6.03C7.29 12.61 6 17.331 6 22h2c0-1.007.07-2.012.19-3H12c4.1 0 7.48-3.082 7.94-7.054C22.79 10.147 23.17 6.359 23 3z"/></svg>
+    </div>
+
+    <!-- BOTTOM NAV -->
+    <div class="bottomnav">
+      <div class="bnav active"><svg viewBox="0 0 24 24"><path d="M22.46 7.57L12.357 2.115c-.223-.12-.49-.12-.713 0L1.543 7.57c-.364.197-.5.652-.303 1.017.135.25.394.393.66.393.12 0 .243-.03.356-.09l.48-.26V19.94c0 .804.65 1.46 1.46 1.46h16.516c.81 0 1.46-.656 1.46-1.46V8.63l.48.26c.364.196.82.06 1.016-.304.198-.365.062-.82-.302-1.016z"/></svg></div>
+      <div class="bnav"><svg viewBox="0 0 24 24"><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66z"/></svg></div>
+      <div class="bnav notif-dot"><svg viewBox="0 0 24 24"><path d="M19.993 9.042C19.48 5.017 16.054 2 11.996 2s-7.49 3.021-7.999 7.051L2.866 18H7.1c.463 1.723 2.01 3 3.898 3 1.888 0 3.434-1.277 3.898-3h4.228l-1.13-8.958z"/></svg><div class="ndot"></div></div>
+      <div class="bnav"><svg viewBox="0 0 24 24"><path d="M1.998 5.5c0-1.381 1.119-2.5 2.5-2.5h15c1.381 0 2.5 1.119 2.5 2.5v13c0 1.381-1.119 2.5-2.5 2.5h-15c-1.381 0-2.5-1.119-2.5-2.5v-13z"/></svg></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

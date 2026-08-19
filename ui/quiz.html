@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#f8f9fb;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;height:100vh;overflow:hidden;display:flex;flex-direction:column;}
+
+header{background:#fff;padding:12px 24px;border-bottom:1px solid #e8eaf0;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.brand{font-size:15px;font-weight:800;color:#1a1a2e;letter-spacing:-.3px;}
+.brand span{color:#6c63ff;}
+.progress-wrap{flex:1;margin:0 24px;}
+.progress-label{font-size:11px;color:#888;margin-bottom:4px;display:flex;justify-content:space-between;}
+.progress-track{background:#e8eaf0;border-radius:4px;height:5px;overflow:hidden;}
+.progress-bar{height:100%;background:linear-gradient(90deg,#6c63ff,#a78bfa);border-radius:4px;transition:.4s;}
+.score-badge{background:#6c63ff;color:#fff;border-radius:20px;padding:4px 14px;font-size:12px;font-weight:700;white-space:nowrap;}
+
+/* MAIN */
+.main{flex:1;display:flex;align-items:center;justify-content:center;padding:16px;overflow:hidden;}
+
+.quiz-card{background:#fff;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,.08);width:100%;max-width:680px;padding:28px 32px;display:flex;flex-direction:column;gap:20px;max-height:calc(100vh - 90px);overflow-y:auto;}
+.quiz-card::-webkit-scrollbar{display:none;}
+
+/* QUESTION */
+.q-meta{display:flex;align-items:center;gap:8px;}
+.q-num{font-size:11px;font-weight:700;color:#6c63ff;text-transform:uppercase;letter-spacing:.6px;}
+.q-cat{background:#ede9ff;color:#6c63ff;border-radius:10px;padding:2px 8px;font-size:11px;font-weight:600;}
+.q-text{font-size:17px;font-weight:700;color:#1a1a2e;line-height:1.4;}
+
+/* OPTIONS */
+.options{display:flex;flex-direction:column;gap:8px;}
+.option{display:flex;align-items:center;gap:12px;padding:13px 16px;border-radius:10px;border:2px solid #e8eaf0;cursor:pointer;transition:.2s;background:#fff;}
+.option:hover:not(.disabled){border-color:#6c63ff;background:#f5f3ff;}
+.option.selected{border-color:#6c63ff;background:#f5f3ff;}
+.option.correct{border-color:#22c55e;background:#f0fdf4;}
+.option.wrong{border-color:#ef4444;background:#fef2f2;}
+.option.reveal-correct{border-color:#22c55e;background:#f0fdf4;}
+.option.disabled{cursor:default;}
+.opt-letter{width:28px;height:28px;border-radius:50%;border:2px solid #e8eaf0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#888;flex-shrink:0;transition:.2s;}
+.option.selected .opt-letter{border-color:#6c63ff;background:#6c63ff;color:#fff;}
+.option.correct .opt-letter{border-color:#22c55e;background:#22c55e;color:#fff;}
+.option.wrong .opt-letter{border-color:#ef4444;background:#ef4444;color:#fff;}
+.option.reveal-correct .opt-letter{border-color:#22c55e;background:#22c55e;color:#fff;}
+.opt-text{font-size:14px;color:#1a1a2e;font-weight:500;}
+.opt-icon{margin-left:auto;font-size:16px;}
+
+/* EXPLANATION */
+.explanation{background:#f5f3ff;border-left:3px solid #6c63ff;border-radius:0 8px 8px 0;padding:12px 14px;font-size:13px;color:#4a4070;line-height:1.5;display:none;}
+.explanation.show{display:block;}
+.explanation strong{color:#6c63ff;}
+
+/* ACTIONS */
+.actions{display:flex;justify-content:space-between;align-items:center;padding-top:4px;}
+.skip-btn{color:#aaa;background:none;border:none;font-size:13px;cursor:pointer;padding:6px;}
+.skip-btn:hover{color:#666;}
+.next-btn{background:linear-gradient(135deg,#6c63ff,#a78bfa);color:#fff;border:none;padding:11px 28px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:.2s;display:none;}
+.next-btn.show{display:block;}
+.next-btn:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(108,99,255,.4);}
+
+/* RESULTS SCREEN */
+.results{display:none;flex-direction:column;align-items:center;gap:16px;text-align:center;padding:16px 0;}
+.results.show{display:flex;}
+.trophy{font-size:56px;}
+.res-title{font-size:24px;font-weight:800;color:#1a1a2e;}
+.res-sub{color:#888;font-size:14px;}
+.res-score{font-size:48px;font-weight:900;color:#6c63ff;}
+.res-label{font-size:14px;color:#888;margin-top:-12px;}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;width:100%;}
+.stat{background:#f8f9fb;border-radius:10px;padding:12px;border:1px solid #e8eaf0;}
+.stat-val{font-size:22px;font-weight:800;margin-bottom:2px;}
+.stat-lbl{font-size:11px;color:#888;}
+.retry-btn{background:linear-gradient(135deg,#6c63ff,#a78bfa);color:#fff;border:none;padding:13px 36px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:.2s;}
+.retry-btn:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(108,99,255,.4);}
+
+/* START SCREEN */
+.start{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;padding:16px 0;}
+.start-icon{font-size:52px;}
+.start-title{font-size:22px;font-weight:800;color:#1a1a2e;}
+.start-sub{color:#888;font-size:14px;max-width:380px;line-height:1.5;}
+.topics{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;}
+.topic{background:#ede9ff;color:#6c63ff;border-radius:20px;padding:5px 14px;font-size:12px;font-weight:600;}
+.start-btn{background:linear-gradient(135deg,#6c63ff,#a78bfa);color:#fff;border:none;padding:13px 36px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:.2s;margin-top:4px;}
+.start-btn:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(108,99,255,.4);}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">Study<span>Quiz</span></div>
+  <div class="progress-wrap" id="progress-wrap" style="display:none">
+    <div class="progress-label"><span id="q-counter">Question 1 / 10</span><span id="q-time"></span></div>
+    <div class="progress-track"><div class="progress-bar" id="progress-bar" style="width:10%"></div></div>
+  </div>
+  <div class="score-badge" id="score-badge">Score: 0</div>
+</header>
+
+<div class="main">
+  <div class="quiz-card" id="quiz-card">
+
+    <!-- START SCREEN -->
+    <div class="start" id="start-screen">
+      <div class="start-icon">🧠</div>
+      <div class="start-title">Tech Knowledge Quiz</div>
+      <div class="start-sub">Test your knowledge across Big Data, Machine Learning, and IoT. 10 questions, multiple choice.</div>
+      <div class="topics">
+        <span class="topic">🗄 Big Data</span>
+        <span class="topic">🤖 Machine Learning</span>
+        <span class="topic">📡 IoT</span>
+      </div>
+      <button class="start-btn" onclick="startQuiz()">Start Quiz →</button>
+    </div>
+
+    <!-- QUIZ SCREEN -->
+    <div id="quiz-screen" style="display:none;flex-direction:column;gap:20px;">
+      <div class="q-meta">
+        <span class="q-num" id="q-num">Question 1</span>
+        <span class="q-cat" id="q-cat">Big Data</span>
+      </div>
+      <div class="q-text" id="q-text"></div>
+      <div class="options" id="options-list"></div>
+      <div class="explanation" id="explanation"></div>
+      <div class="actions">
+        <button class="skip-btn" id="skip-btn" onclick="nextQuestion()">Skip →</button>
+        <button class="next-btn" id="next-btn" onclick="nextQuestion()">Next Question →</button>
+      </div>
+    </div>
+
+    <!-- RESULTS SCREEN -->
+    <div class="results" id="results-screen">
+      <div class="trophy" id="trophy">🏆</div>
+      <div class="res-score" id="res-score">0/10</div>
+      <div class="res-label">Correct Answers</div>
+      <div class="res-title" id="res-title">Well done!</div>
+      <div class="res-sub" id="res-sub">Keep studying to improve your score.</div>
+      <div class="stat-grid">
+        <div class="stat"><div class="stat-val" id="s-correct" style="color:#22c55e">0</div><div class="stat-lbl">Correct</div></div>
+        <div class="stat"><div class="stat-val" id="s-wrong" style="color:#ef4444">0</div><div class="stat-lbl">Wrong</div></div>
+        <div class="stat"><div class="stat-val" id="s-pct" style="color:#6c63ff">0%</div><div class="stat-lbl">Score</div></div>
+      </div>
+      <button class="retry-btn" onclick="resetQuiz()">Try Again →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {cat:"Big Data",q:"Which of the following is NOT one of the 3 V's of Big Data?",opts:["Volume","Velocity","Variety","Veracity"],ans:3,exp:"The original 3 V's are <strong>Volume, Velocity, and Variety</strong>. Veracity was added later as a 4th V."},
+  {cat:"Big Data",q:"Which tool is most commonly used for distributed processing of large datasets?",opts:["MySQL","Apache Hadoop","Microsoft Excel","SQLite"],ans:1,exp:"<strong>Apache Hadoop</strong> is the go-to framework for distributed storage and processing of big data using the MapReduce model."},
+  {cat:"Big Data",q:"What does HDFS stand for in the Hadoop ecosystem?",opts:["High Data File System","Hadoop Distributed File System","Hierarchical Data Format System","Hybrid Data Framework Solution"],ans:1,exp:"<strong>HDFS (Hadoop Distributed File System)</strong> is the primary storage system used by Hadoop applications, designed to store very large files."},
+  {cat:"Machine Learning",q:"Which algorithm is best suited for classification tasks with labeled data?",opts:["K-Means Clustering","Linear Regression","Random Forest","PCA"],ans:2,exp:"<strong>Random Forest</strong> is a powerful supervised learning algorithm for classification. K-Means is unsupervised; Linear Regression predicts continuous values."},
+  {cat:"Machine Learning",q:"What is overfitting in machine learning?",opts:["When a model performs too well on training data but poorly on new data","When a model has too few parameters","When training data is too small","When the model trains too slowly"],ans:0,exp:"<strong>Overfitting</strong> occurs when a model memorizes training data including noise, leading to poor generalization on unseen data."},
+  {cat:"Machine Learning",q:"Which metric is most appropriate for evaluating a classification model with imbalanced classes?",opts:["Accuracy","Mean Squared Error","F1-Score","R-Squared"],ans:2,exp:"<strong>F1-Score</strong> balances Precision and Recall, making it ideal for imbalanced datasets where accuracy can be misleading."},
+  {cat:"Machine Learning",q:"What type of learning does a neural network use to adjust weights?",opts:["Reinforcement Learning","Backpropagation","Clustering","Dimensionality Reduction"],ans:1,exp:"<strong>Backpropagation</strong> computes the gradient of the loss function and propagates it backwards to update the network's weights."},
+  {cat:"IoT",q:"What protocol is most commonly used for lightweight messaging in IoT devices?",opts:["HTTP","FTP","MQTT","SMTP"],ans:2,exp:"<strong>MQTT (Message Queuing Telemetry Transport)</strong> is a lightweight publish-subscribe protocol ideal for IoT devices with low bandwidth and battery constraints."},
+  {cat:"IoT",q:"Which layer is responsible for collecting data from the physical world in an IoT architecture?",opts:["Application Layer","Network Layer","Perception Layer","Business Layer"],ans:2,exp:"The <strong>Perception Layer</strong> (also called the sensing layer) is where physical sensors and actuators interact with the real world to collect data."},
+  {cat:"IoT",q:"What is edge computing in the context of IoT?",opts:["Storing all data in the cloud","Processing data closer to the source rather than in a central server","A type of IoT sensor","A network protocol for IoT"],ans:1,exp:"<strong>Edge Computing</strong> processes data near the IoT device rather than sending everything to the cloud, reducing latency and bandwidth usage."},
+];
+
+let current = 0, score = 0, wrong = 0, answered = false;
+
+function startQuiz(){
+  document.getElementById('start-screen').style.display = 'none';
+  document.getElementById('quiz-screen').style.display = 'flex';
+  document.getElementById('progress-wrap').style.display = 'block';
+  current = 0; score = 0; wrong = 0;
+  showQuestion();
+}
+
+function showQuestion(){
+  answered = false;
+  const q = questions[current];
+  document.getElementById('q-num').textContent = `Question ${current+1}`;
+  document.getElementById('q-cat').textContent = q.cat;
+  document.getElementById('q-text').textContent = q.q;
+  document.getElementById('q-counter').textContent = `Question ${current+1} / ${questions.length}`;
+  document.getElementById('progress-bar').style.width = `${((current+1)/questions.length)*100}%`;
+  document.getElementById('explanation').className = 'explanation';
+  document.getElementById('explanation').innerHTML = '';
+  document.getElementById('next-btn').className = 'next-btn';
+  document.getElementById('skip-btn').style.display = 'block';
+
+  const list = document.getElementById('options-list');
+  list.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const letters = ['A','B','C','D'];
+    const el = document.createElement('div');
+    el.className = 'option';
+    el.innerHTML = `<div class="opt-letter">${letters[i]}</div><div class="opt-text">${opt}</div><div class="opt-icon"></div>`;
+    el.onclick = () => selectAnswer(i, el);
+    list.appendChild(el);
+  });
+}
+
+function selectAnswer(idx, el){
+  if(answered) return;
+  answered = true;
+  const q = questions[current];
+  const opts = document.querySelectorAll('.option');
+  opts.forEach(o => o.classList.add('disabled'));
+  document.getElementById('skip-btn').style.display = 'none';
+
+  if(idx === q.ans){
+    el.classList.add('correct');
+    el.querySelector('.opt-icon').textContent = '✓';
+    score++;
+  } else {
+    el.classList.add('wrong');
+    el.querySelector('.opt-icon').textContent = '✗';
+    opts[q.ans].classList.add('reveal-correct');
+    opts[q.ans].querySelector('.opt-icon').textContent = '✓';
+    wrong++;
+  }
+
+  const expEl = document.getElementById('explanation');
+  expEl.innerHTML = q.exp;
+  expEl.classList.add('show');
+
+  document.getElementById('score-badge').textContent = `Score: ${score}`;
+  document.getElementById('next-btn').className = 'next-btn show';
+  document.getElementById('next-btn').textContent = current < questions.length-1 ? 'Next Question →' : 'See Results →';
+}
+
+function nextQuestion(){
+  current++;
+  if(current < questions.length){
+    showQuestion();
+  } else {
+    showResults();
+  }
+}
+
+function showResults(){
+  document.getElementById('quiz-screen').style.display = 'none';
+  document.getElementById('progress-wrap').style.display = 'none';
+  const pct = Math.round((score/questions.length)*100);
+  const res = document.getElementById('results-screen');
+  res.classList.add('show');
+  document.getElementById('res-score').textContent = `${score}/${questions.length}`;
+  document.getElementById('s-correct').textContent = score;
+  document.getElementById('s-wrong').textContent = wrong;
+  document.getElementById('s-pct').textContent = `${pct}%`;
+
+  if(pct >= 80){ document.getElementById('trophy').textContent='🏆'; document.getElementById('res-title').textContent='Excellent! 🎉'; document.getElementById('res-sub').textContent='You have a strong understanding of these topics!'; }
+  else if(pct >= 50){ document.getElementById('trophy').textContent='👍'; document.getElementById('res-title').textContent='Good effort!'; document.getElementById('res-sub').textContent='Review the topics you missed and try again.'; }
+  else { document.getElementById('trophy').textContent='📚'; document.getElementById('res-title').textContent='Keep studying!'; document.getElementById('res-sub').textContent='Review Big Data, ML, and IoT fundamentals and try again.'; }
+}
+
+function resetQuiz(){
+  document.getElementById('results-screen').classList.remove('show');
+  document.getElementById('quiz-screen').style.display = 'none';
+  document.getElementById('start-screen').style.display = 'flex';
+  document.getElementById('score-badge').textContent = 'Score: 0';
+}
+</script>
+</body>
+</html>
