@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:#0b0f19;color:#c9d1d9;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;height:100vh;overflow:hidden;display:flex;}
@@ -88,6 +89,19 @@ tr:hover td{background:#161b22;}
 .risk-crit{background:rgba(248,81,73,.15);color:#f85149;}
 .risk-high{background:rgba(227,179,65,.15);color:#e3b341;}
 .risk-low{background:rgba(63,185,80,.15);color:#3fb950;}
+
+@media(max-width: 768px){
+    body{ flex-direction: column; overflow-y: auto; height: auto; }
+    .sidebar{ width: 100%; flex-direction: row; flex-wrap: wrap; align-items: center; border-right: none; border-bottom: 1px solid #21262d; padding: 8px; gap: 4px; }
+    .brand{ border-bottom: none; padding: 6px 8px; }
+    .nav-section{ display: none; }
+    .nav-item{ padding: 5px 8px; font-size: 12px; }
+    .status-row{ margin-top: 0; border-top: none; padding: 6px 8px; }
+    .main{ overflow: visible; }
+    .content{ overflow: visible; }
+    table{ font-size: 11px; }
+    th, td{ padding: 6px 7px; }
+}
 </style>
 </head>
 <body>

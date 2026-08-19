@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#f8f9fb;color:#111;height:100vh;overflow:hidden;display:flex;flex-direction:column;}
@@ -74,6 +75,21 @@ nav{background:#fff;height:56px;display:flex;align-items:center;justify-content:
 .delivered{background:#22c55e;}
 .processing{background:#f59e0b;}
 .shipped{background:#3b82f6;}
+
+@media(max-width: 768px){
+    body{ overflow-y: auto; height: auto; }
+    .main{ flex-direction: column; overflow: visible; }
+    .sidebar{ width: 100%; border-right: none; border-bottom: 1px solid #eee; padding: 10px; display: flex; overflow-x: auto; gap: 10px; height: auto; flex-shrink: 0; }
+    .menu-item{ margin: 0; white-space: nowrap; padding: 8px 12px; }
+    .sidebar-title{ display: none; }
+    .body{ grid-template-columns: 1fr; padding: 15px; overflow: visible; }
+    .grid{ grid-template-columns: 1fr 1fr; }
+    .nav-links{ display: none; }
+    .search{ width: 130px; }
+}
+@media(max-width: 500px){
+    .grid{ grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
