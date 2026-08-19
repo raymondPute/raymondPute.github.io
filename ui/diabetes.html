@@ -1,194 +1,201 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-body{background:#0b0f19;color:#c9d1d9;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;height:100vh;overflow:hidden;display:flex;}
-
-/* SIDEBAR */
-.sidebar{width:200px;background:#0d1117;border-right:1px solid #21262d;display:flex;flex-direction:column;padding:0;flex-shrink:0;}
-.brand{padding:16px 16px 12px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #21262d;}
-.brand-icon{width:28px;height:28px;background:linear-gradient(135deg,#388bfd,#1f6feb);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
-.brand-name{font-size:13px;font-weight:700;color:#e6edf3;}
-.brand-sub{font-size:10px;color:#7d8590;}
-.nav-section{padding:10px 8px 4px;font-size:10px;color:#7d8590;letter-spacing:.8px;text-transform:uppercase;font-weight:600;}
-.nav-item{display:flex;align-items:center;gap:8px;padding:7px 10px;margin:1px 4px;border-radius:6px;cursor:pointer;font-size:13px;color:#8b949e;transition:.1s;}
-.nav-item:hover{background:#161b22;color:#c9d1d9;}
-.nav-item.active{background:#1f2d3d;color:#388bfd;}
-.nav-icon{width:16px;text-align:center;font-size:13px;flex-shrink:0;}
-.status-row{margin-top:auto;padding:12px;border-top:1px solid #21262d;display:flex;align-items:center;gap:8px;}
-.status-ava{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#1d4ed8);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;}
-.status-name{font-size:12px;font-weight:600;color:#e6edf3;}
-.status-role{font-size:10px;color:#7d8590;}
-
-/* MAIN */
+body{background:#f4f6f9;color:#1a1a2e;font-family:"Segoe UI",system-ui,-apple-system,sans-serif;display:flex;height:100vh;overflow:hidden;}
+.sidebar{width:220px;background:#fff;border-right:1px solid #e8ecf0;display:flex;flex-direction:column;flex-shrink:0;}
+.logo{padding:22px 20px;border-bottom:1px solid #e8ecf0;}
+.logo-text{font-size:16px;font-weight:800;color:#1a1a2e;letter-spacing:-.4px;}
+.logo-text span{color:#2563eb;}
+.logo-sub{font-size:11px;color:#94a3b8;margin-top:2px;}
+.nav{padding:16px 10px;flex:1;}
+.nav-label{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.8px;padding:0 10px;margin-bottom:6px;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;cursor:pointer;font-size:13px;color:#64748b;margin-bottom:2px;transition:.15s;}
+.nav-item:hover{background:#f1f5f9;color:#1a1a2e;}
+.nav-item.active{background:#eff6ff;color:#2563eb;font-weight:600;}
+.nav-icon{font-size:15px;width:18px;text-align:center;}
+.sidebar-footer{padding:14px 16px;border-top:1px solid #e8ecf0;display:flex;align-items:center;gap:10px;}
+.avatar{width:32px;height:32px;background:#2563eb;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;flex-shrink:0;}
+.user-name{font-size:13px;font-weight:600;color:#1a1a2e;}
+.user-role{font-size:11px;color:#94a3b8;}
 .main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
-.topbar{height:48px;background:#0d1117;border-bottom:1px solid #21262d;display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0;}
-.topbar-title{font-size:14px;font-weight:700;color:#e6edf3;}
-.topbar-right{display:flex;align-items:center;gap:8px;}
-.badge{padding:3px 9px;border-radius:12px;font-size:11px;font-weight:600;}
-.badge.red{background:rgba(248,81,73,.15);color:#f85149;border:1px solid rgba(248,81,73,.3);}
-.badge.green{background:rgba(63,185,80,.15);color:#3fb950;border:1px solid rgba(63,185,80,.3);}
-.badge.blue{background:rgba(56,139,253,.15);color:#388bfd;border:1px solid rgba(56,139,253,.3);}
-
-/* CONTENT */
-.content{flex:1;overflow-y:auto;padding:16px 20px;display:flex;flex-direction:column;gap:14px;}
+.topbar{background:#fff;border-bottom:1px solid #e8ecf0;padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.topbar-title{font-size:15px;font-weight:700;color:#1a1a2e;}
+.topbar-right{display:flex;align-items:center;gap:10px;}
+.alert-badge{background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe;border-radius:20px;padding:4px 12px;font-size:12px;font-weight:600;}
+.date{font-size:12px;color:#94a3b8;}
+.content{flex:1;overflow-y:auto;padding:20px 24px;display:flex;flex-direction:column;gap:16px;}
 .content::-webkit-scrollbar{width:4px;}
-.content::-webkit-scrollbar-track{background:transparent;}
-.content::-webkit-scrollbar-thumb{background:#30363d;border-radius:2px;}
-
-/* KPI GRID */
-.kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
-.kpi-card{background:#161b22;border:1px solid #21262d;border-radius:8px;padding:12px 14px;}
-.kpi-label{font-size:11px;color:#7d8590;margin-bottom:4px;font-weight:500;}
-.kpi-value{font-size:22px;font-weight:700;color:#e6edf3;letter-spacing:-.5px;}
-.kpi-sub{font-size:11px;margin-top:3px;}
-.up{color:#3fb950;}
-.down{color:#f85149;}
-
-/* CHARTS ROW */
-.charts{display:grid;grid-template-columns:1.6fr 1fr;gap:12px;}
-.panel{background:#161b22;border:1px solid #21262d;border-radius:8px;padding:14px;}
-.panel-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
-.panel-title{font-size:13px;font-weight:700;color:#e6edf3;}
-.panel-tag{font-size:10px;padding:2px 8px;border-radius:4px;background:rgba(56,139,253,.15);color:#388bfd;border:1px solid rgba(56,139,253,.2);}
-
-/* CHART BARS */
-.bars{display:flex;gap:5px;align-items:flex-end;height:80px;}
-.bar-col{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;}
-.bar{border-radius:4px 4px 0 0;width:100%;min-height:4px;}
-.bar-lbl{font-size:9px;color:#7d8590;}
-
-/* ALERT LIST */
-.alert-list{display:flex;flex-direction:column;gap:6px;}
-.alert-row{display:flex;align-items:center;gap:10px;padding:9px 10px;background:#0d1117;border-radius:6px;border-left:3px solid;}
-.alert-row.critical{border-color:#f85149;}
-.alert-row.high{border-color:#e3b341;}
-.alert-row.medium{border-color:#388bfd;}
-.al-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
-.al-info{flex:1;}
-.al-name{font-size:12px;font-weight:600;color:#e6edf3;}
-.al-meta{font-size:11px;color:#7d8590;margin-top:1px;}
-.al-score{font-size:13px;font-weight:800;}
-
-/* RISK METER */
-.risk-wrap{margin-top:10px;}
-.risk-label{font-size:11px;color:#7d8590;margin-bottom:5px;}
-.risk-track{background:#21262d;border-radius:4px;height:6px;overflow:hidden;}
-.risk-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,#3fb950 0%,#e3b341 55%,#f85149 100%);}
-
-/* PATIENT TABLE */
+.content::-webkit-scrollbar-thumb{background:#e2e8f0;border-radius:2px;}
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.stat-card{background:#fff;border-radius:12px;padding:16px 18px;border:1px solid #e8ecf0;}
+.stat-label{font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px;}
+.stat-value{font-size:26px;font-weight:800;color:#1a1a2e;letter-spacing:-.5px;}
+.stat-unit{font-size:12px;color:#94a3b8;margin-left:3px;font-weight:400;}
+.stat-trend{font-size:11px;margin-top:6px;color:#64748b;}
+.stat-trend.up{color:#16a34a;}
+.stat-trend.down{color:#dc2626;}
+.stat-card.primary{background:#2563eb;border-color:#2563eb;}
+.stat-card.primary .stat-label{color:rgba(255,255,255,.7);}
+.stat-card.primary .stat-value{color:#fff;}
+.stat-card.primary .stat-unit{color:rgba(255,255,255,.7);}
+.stat-card.primary .stat-trend{color:rgba(255,255,255,.8);}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.card{background:#fff;border-radius:12px;border:1px solid #e8ecf0;overflow:hidden;}
+.card-header{padding:14px 18px;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;justify-content:space-between;}
+.card-title{font-size:13px;font-weight:700;color:#1a1a2e;}
+.card-body{padding:16px 18px;}
+.glucose-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.glucose-label{font-size:12px;color:#64748b;}
+.glucose-val{font-size:12px;font-weight:700;color:#1a1a2e;}
+.bar-wrap{display:flex;align-items:center;margin-bottom:14px;}
+.bar-track{background:#f1f5f9;border-radius:4px;height:6px;flex:1;margin-right:10px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:4px;background:#2563eb;}
+.bar-fill.warn{background:#f59e0b;}
+.bar-fill.alert{background:#ef4444;}
+.bar-pct{font-size:11px;color:#94a3b8;width:28px;text-align:right;}
 .table-wrap{overflow-x:auto;}
 table{width:100%;border-collapse:collapse;font-size:12px;}
-th{text-align:left;padding:8px 10px;font-size:11px;font-weight:600;color:#7d8590;border-bottom:1px solid #21262d;text-transform:uppercase;letter-spacing:.5px;}
-td{padding:9px 10px;border-bottom:1px solid #161b22;color:#c9d1d9;}
-tr:hover td{background:#161b22;}
-.risk-pill{padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;}
-.risk-crit{background:rgba(248,81,73,.15);color:#f85149;}
-.risk-high{background:rgba(227,179,65,.15);color:#e3b341;}
-.risk-low{background:rgba(63,185,80,.15);color:#3fb950;}
-
-@media(max-width: 768px){
-    body{ flex-direction: column; overflow-y: auto; height: auto; }
-    .sidebar{ width: 100%; flex-direction: row; flex-wrap: wrap; align-items: center; border-right: none; border-bottom: 1px solid #21262d; padding: 8px; gap: 4px; }
-    .brand{ border-bottom: none; padding: 6px 8px; }
-    .nav-section{ display: none; }
-    .nav-item{ padding: 5px 8px; font-size: 12px; }
-    .status-row{ margin-top: 0; border-top: none; padding: 6px 8px; }
-    .main{ overflow: visible; }
-    .content{ overflow: visible; }
-    table{ font-size: 11px; }
-    th, td{ padding: 6px 7px; }
+th{text-align:left;padding:9px 12px;font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid #e8ecf0;}
+td{padding:10px 12px;border-bottom:1px solid #f8fafc;color:#374151;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:#f8fafc;}
+.pill{padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;}
+.pill.normal{background:#f0fdf4;color:#16a34a;}
+.pill.caution{background:#fffbeb;color:#b45309;}
+.pill.critical{background:#fef2f2;color:#dc2626;}
+.alert-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid #f1f5f9;}
+.alert-item:last-child{border-bottom:none;}
+.alert-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.alert-dot.blue{background:#2563eb;}
+.alert-dot.yellow{background:#f59e0b;}
+.alert-dot.red{background:#ef4444;}
+.alert-text{font-size:12px;color:#374151;line-height:1.5;}
+.alert-time{font-size:11px;color:#94a3b8;margin-top:2px;}
+@media(max-width:768px){
+    body{flex-direction:column;overflow-y:auto;height:auto;}
+    .sidebar{width:100%;border-right:none;border-bottom:1px solid #e8ecf0;}
+    .nav{display:flex;flex-direction:row;overflow-x:auto;padding:8px;gap:4px;}
+    .nav-label{display:none;}
+    .nav-item{white-space:nowrap;font-size:12px;padding:6px 10px;}
+    .sidebar-footer{display:none;}
+    .main{overflow:visible;}
+    .content{overflow:visible;padding:14px;}
+    .stat-row{grid-template-columns:1fr 1fr;}
+    .grid-2{grid-template-columns:1fr;}
+}
+@media(max-width:500px){
+    .stat-row{grid-template-columns:1fr;}
+    table{font-size:11px;}
+    th,td{padding:7px 8px;}
 }
 </style>
 </head>
 <body>
-<!-- SIDEBAR -->
+
 <div class="sidebar">
-  <div class="brand">
-    <div class="brand-icon">🩺</div>
-    <div><div class="brand-name">DiabetAlert</div><div class="brand-sub">ML Surveillance</div></div>
-  </div>
-  <div class="nav-section">Dashboard</div>
-  <div class="nav-item active"><span class="nav-icon">◉</span> Overview</div>
-  <div class="nav-item"><span class="nav-icon">👥</span> Patients</div>
-  <div class="nav-item"><span class="nav-icon">⚠</span> Alerts</div>
-  <div class="nav-section">Analytics</div>
-  <div class="nav-item"><span class="nav-icon">📈</span> Risk Trends</div>
-  <div class="nav-item"><span class="nav-icon">🧪</span> Predictions</div>
-  <div class="nav-item"><span class="nav-icon">📋</span> Reports</div>
-  <div class="nav-section">Risk Filter</div>
-  <div class="nav-item"><span class="nav-icon" style="color:#f85149">●</span> Critical (3)</div>
-  <div class="nav-item"><span class="nav-icon" style="color:#e3b341">●</span> High Risk (12)</div>
-  <div class="nav-item"><span class="nav-icon" style="color:#3fb950">●</span> Stable (47)</div>
-  <div class="status-row">
-    <div class="status-ava">R</div>
-    <div><div class="status-name">Dr. Raymond</div><div class="status-role">Administrator</div></div>
-  </div>
+    <div class="logo">
+        <div class="logo-text">Dia<span>Care</span></div>
+        <div class="logo-sub">Clinical Dashboard</div>
+    </div>
+    <div class="nav">
+        <div class="nav-label">Main</div>
+        <div class="nav-item active"><span class="nav-icon">◈</span> Overview</div>
+        <div class="nav-item"><span class="nav-icon">◎</span> Patients</div>
+        <div class="nav-item"><span class="nav-icon">◷</span> Monitoring</div>
+        <div class="nav-item"><span class="nav-icon">◑</span> Reports</div>
+        <div class="nav-label" style="margin-top:14px;">Settings</div>
+        <div class="nav-item"><span class="nav-icon">⊕</span> Alerts</div>
+        <div class="nav-item"><span class="nav-icon">⊙</span> Settings</div>
+    </div>
+    <div class="sidebar-footer">
+        <div class="avatar">DR</div>
+        <div>
+            <div class="user-name">Dr. Raymond</div>
+            <div class="user-role">Chief Physician</div>
+        </div>
+    </div>
 </div>
 
-<!-- MAIN -->
 <div class="main">
-  <div class="topbar">
-    <div class="topbar-title">Risk Overview</div>
-    <div class="topbar-right">
-      <span class="badge red">⚠ 3 Critical</span>
-      <span class="badge green">✓ Acc: 94.2%</span>
-      <span class="badge blue">⟳ 2m ago</span>
-    </div>
-  </div>
-
-  <div class="content">
-    <!-- KPIs -->
-    <div class="kpi">
-      <div class="kpi-card"><div class="kpi-label">Total Patients</div><div class="kpi-value">62</div><div class="kpi-sub up">↑ 4 new this week</div></div>
-      <div class="kpi-card"><div class="kpi-label">Critical Risk</div><div class="kpi-value" style="color:#f85149">3</div><div class="kpi-sub down">↑ Needs review</div></div>
-      <div class="kpi-card"><div class="kpi-label">Avg. Risk Score</div><div class="kpi-value" style="color:#e3b341">42.7</div><div class="kpi-sub up">↓ 2.1 pts from last month</div></div>
-      <div class="kpi-card"><div class="kpi-label">Predictions Today</div><div class="kpi-value" style="color:#388bfd">19</div><div class="kpi-sub up">Model running</div></div>
-    </div>
-
-    <!-- CHARTS -->
-    <div class="charts">
-      <div class="panel">
-        <div class="panel-header"><span class="panel-title">Risk Score — Last 7 Days</span><span class="panel-tag">ML Model v2.1</span></div>
-        <div class="bars">
-          <div class="bar-col"><div class="bar" style="height:35%;background:#3fb950;"></div><div class="bar-lbl">Mon</div></div>
-          <div class="bar-col"><div class="bar" style="height:58%;background:#e3b341;"></div><div class="bar-lbl">Tue</div></div>
-          <div class="bar-col"><div class="bar" style="height:40%;background:#3fb950;"></div><div class="bar-lbl">Wed</div></div>
-          <div class="bar-col"><div class="bar" style="height:82%;background:#f85149;"></div><div class="bar-lbl">Thu</div></div>
-          <div class="bar-col"><div class="bar" style="height:62%;background:#e3b341;"></div><div class="bar-lbl">Fri</div></div>
-          <div class="bar-col"><div class="bar" style="height:44%;background:#3fb950;"></div><div class="bar-lbl">Sat</div></div>
-          <div class="bar-col"><div class="bar" style="height:54%;background:#e3b341;"></div><div class="bar-lbl">Sun</div></div>
+    <div class="topbar">
+        <div class="topbar-title">Patient Overview</div>
+        <div class="topbar-right">
+            <div class="date">Aug 19, 2026</div>
+            <div class="alert-badge">3 Active Alerts</div>
         </div>
-        <div class="risk-wrap"><div class="risk-label">Population Risk Meter</div><div class="risk-track"><div class="risk-fill" style="width:43%"></div></div></div>
-      </div>
-      <div class="panel">
-        <div class="panel-header"><span class="panel-title">Active Alerts</span></div>
-        <div class="alert-list">
-          <div class="alert-row critical"><div class="al-dot" style="background:#f85149;"></div><div class="al-info"><div class="al-name">Patient #0041</div><div class="al-meta">Glucose: 286 · BMI: 34.2</div></div><div class="al-score" style="color:#f85149">91</div></div>
-          <div class="alert-row critical"><div class="al-dot" style="background:#f85149;"></div><div class="al-info"><div class="al-name">Patient #0028</div><div class="al-meta">Insulin: 0 · Age: 58</div></div><div class="al-score" style="color:#f85149">87</div></div>
-          <div class="alert-row high"><div class="al-dot" style="background:#e3b341;"></div><div class="al-info"><div class="al-name">Patient #0055</div><div class="al-meta">BP: 148/92 · Gluc: 178</div></div><div class="al-score" style="color:#e3b341">73</div></div>
-          <div class="alert-row medium"><div class="al-dot" style="background:#388bfd;"></div><div class="al-info"><div class="al-name">Patient #0012</div><div class="al-meta">Preg: 5 · BMI: 31.1</div></div><div class="al-score" style="color:#388bfd">68</div></div>
-        </div>
-      </div>
     </div>
+    <div class="content">
 
-    <!-- TABLE -->
-    <div class="panel">
-      <div class="panel-header"><span class="panel-title">Patient Risk Table</span></div>
-      <div class="table-wrap">
-        <table>
-          <tr><th>ID</th><th>Age</th><th>Glucose</th><th>BMI</th><th>Risk Score</th><th>Level</th></tr>
-          <tr><td>#0041</td><td>52</td><td>286 mg/dL</td><td>34.2</td><td>91 / 100</td><td><span class="risk-pill risk-crit">Critical</span></td></tr>
-          <tr><td>#0028</td><td>58</td><td>210 mg/dL</td><td>29.8</td><td>87 / 100</td><td><span class="risk-pill risk-crit">Critical</span></td></tr>
-          <tr><td>#0055</td><td>44</td><td>178 mg/dL</td><td>27.4</td><td>73 / 100</td><td><span class="risk-pill risk-high">High</span></td></tr>
-          <tr><td>#0007</td><td>36</td><td>112 mg/dL</td><td>22.1</td><td>28 / 100</td><td><span class="risk-pill risk-low">Stable</span></td></tr>
-        </table>
-      </div>
+        <div class="stat-row">
+            <div class="stat-card primary">
+                <div class="stat-label">Avg. Blood Glucose</div>
+                <div class="stat-value">142<span class="stat-unit">mg/dL</span></div>
+                <div class="stat-trend">&#8593; 4.2% from yesterday</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Active Patients</div>
+                <div class="stat-value">38</div>
+                <div class="stat-trend up">&#8593; 2 admitted today</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Insulin Doses Today</div>
+                <div class="stat-value">94</div>
+                <div class="stat-trend">Across 38 patients</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Critical Cases</div>
+                <div class="stat-value">3</div>
+                <div class="stat-trend down">&#8593; 1 since last hour</div>
+            </div>
+        </div>
+
+        <div class="grid-2">
+            <div class="card">
+                <div class="card-header"><div class="card-title">Glucose Level Breakdown</div></div>
+                <div class="card-body">
+                    <div class="glucose-row"><span class="glucose-label">Normal (70-140 mg/dL)</span><span class="glucose-val">21 patients</span></div>
+                    <div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:55%"></div></div><span class="bar-pct">55%</span></div>
+                    <div class="glucose-row"><span class="glucose-label">Elevated (141-200 mg/dL)</span><span class="glucose-val">14 patients</span></div>
+                    <div class="bar-wrap"><div class="bar-track"><div class="bar-fill warn" style="width:37%"></div></div><span class="bar-pct">37%</span></div>
+                    <div class="glucose-row"><span class="glucose-label">Critical (&gt;200 mg/dL)</span><span class="glucose-val">3 patients</span></div>
+                    <div class="bar-wrap"><div class="bar-track"><div class="bar-fill alert" style="width:8%"></div></div><span class="bar-pct">8%</span></div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header"><div class="card-title">Recent Alerts</div></div>
+                <div class="card-body">
+                    <div class="alert-item"><div class="alert-dot red"></div><div><div class="alert-text">Patient #014 — Blood glucose spiked to 318 mg/dL</div><div class="alert-time">2 min ago</div></div></div>
+                    <div class="alert-item"><div class="alert-dot yellow"></div><div><div class="alert-text">Patient #027 — Insulin dose overdue by 45 minutes</div><div class="alert-time">18 min ago</div></div></div>
+                    <div class="alert-item"><div class="alert-dot blue"></div><div><div class="alert-text">Patient #033 — HbA1c result ready for review</div><div class="alert-time">1 hr ago</div></div></div>
+                    <div class="alert-item"><div class="alert-dot yellow"></div><div><div class="alert-text">Patient #009 — Glucose dropped below 70 mg/dL</div><div class="alert-time">2 hr ago</div></div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><div class="card-title">Patient Monitoring</div></div>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Patient</th><th>Age</th><th>Glucose (mg/dL)</th><th>HbA1c (%)</th><th>Last Reading</th><th>Status</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Sarah Moyo</strong></td><td>54</td><td>126</td><td>6.8</td><td>10 min ago</td><td><span class="pill normal">Normal</span></td></tr>
+                        <tr><td><strong>James Phiri</strong></td><td>62</td><td>318</td><td>9.4</td><td>2 min ago</td><td><span class="pill critical">Critical</span></td></tr>
+                        <tr><td><strong>Grace Banda</strong></td><td>47</td><td>162</td><td>7.2</td><td>22 min ago</td><td><span class="pill caution">Caution</span></td></tr>
+                        <tr><td><strong>Elias Tembo</strong></td><td>71</td><td>108</td><td>6.5</td><td>35 min ago</td><td><span class="pill normal">Normal</span></td></tr>
+                        <tr><td><strong>Lucy Mwale</strong></td><td>38</td><td>188</td><td>8.1</td><td>1 hr ago</td><td><span class="pill caution">Caution</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
-  </div>
 </div>
+
 </body>
 </html>
