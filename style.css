@@ -307,13 +307,15 @@ ABOUT
 }
 
 .about-image{
-    width:380px;
+    width:100%;
+    max-width:380px;
 }
 
 .about-image img{
     border-radius:20px;
     border:4px solid var(--main);
     box-shadow:var(--shadow);
+    width:100%;
 }
 
 .about-text{
@@ -370,7 +372,7 @@ PROJECTS
 ==============================*/
 .project-container{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
     gap:35px;
 }
 
@@ -828,6 +830,5 @@ MEDIA QUERY 500px
     .floating{ width:42px; height:42px; font-size:18px; }
     .floating svg{ width:18px; height:18px; }
     .project-container{ grid-template-columns:1fr; }
-    .skills-container{ grid-template-columns:1fr 1fr; }
     footer{ font-size:14px; }
 }
